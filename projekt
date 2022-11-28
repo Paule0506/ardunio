@@ -232,14 +232,14 @@ float geoHeading() {
   if(heading < 0)
     heading += 2*PI;
     
-  // Check for wrap due to addition of declination.
+  // Prüfen
   if(heading > 2*PI)
     heading -= 2*PI;
    
-  // Convert radians to degrees for readability.
+  // Konvertierung
   float headingDegrees = heading * 180/M_PI; 
 
-  // Map to -180 - 180
+  // -180 - 180
   while (headingDegrees < -180) headingDegrees += 360;
   while (headingDegrees >  180) headingDegrees -= 360;
 
@@ -257,7 +257,7 @@ void setSpeedMotorA(int speed) {
   digitalWrite(MOTOR_A_IN_1_PIN, LOW);
   digitalWrite(MOTOR_A_IN_2_PIN, HIGH);
   
-  // set speed to 200 out of possible range 0~255
+  // Motor Speed einstellen
   analogWrite(MOTOR_A_EN_PIN, speed + MOTOR_A_OFFSET);
 }
 
@@ -265,22 +265,21 @@ void setSpeedMotorB(int speed) {
   digitalWrite(MOTOR_B_IN_1_PIN, LOW);
   digitalWrite(MOTOR_B_IN_2_PIN, HIGH);
   
-  // set speed to 200 out of possible range 0~255
+  // Motor Speed einstellen
   analogWrite(MOTOR_B_EN_PIN, speed + MOTOR_B_OFFSET);
 }
 
 void setSpeed(int speed)
 {
-  // this function will run the motors in both directions at a fixed speed
-  // turn on motor A
+  // Motor A an
   setSpeedMotorA(speed);
 
-  // turn on motor B
+  // Motor B an
   setSpeedMotorB(speed);
 }
 
 void stop() {
-  // now turn off motors
+  // Motor aus
   digitalWrite(MOTOR_A_IN_1_PIN, LOW);
   digitalWrite(MOTOR_A_IN_2_PIN, LOW);  
   digitalWrite(MOTOR_B_IN_1_PIN, LOW);
@@ -291,7 +290,7 @@ void drive(int distance, float turn) {
   int fullSpeed = 230;
   int stopSpeed = 0;
 
-  // drive to location
+  // Fahre zur Makierung
   int s = fullSpeed;
   if ( distance < 8 ) {
     int wouldBeSpeed = s - stopSpeed;
@@ -338,7 +337,7 @@ void driveTo(struct GeoLoc &loc, int timeout) {
 
   if (coolerLoc.lat != 0 && coolerLoc.lon != 0 && enabled) {
     float d = 0;
-    //Start move loop here
+    //Move Loop starten
     do {
       nss.listen();
       coolerLoc = checkGPS();
@@ -368,18 +367,18 @@ void setupCompass() {
    /* Initialise the compass */
   if(!mag.begin())
   {
-    /* There was a problem detecting the HMC5883 ... check your connections */
-    Serial.println("Ooops, no HMC5883 detected ... Check your wiring!");
+    /* Problem mit HMC5883 festgestellt ... überprüfe die verbindung */
+    Serial.println("Problem mit HMC5883 festgestellt ... überprüfe die verbindung!");
     while(1);
   }
   
-  /* Display some basic information on this sensor */
+  /* Informationen anzeigen */
   displayCompassDetails();
 }
 
 void setup()
 {
-  // Compass
+  // Kompass
   setupCompass();
 
   // Motor pins
@@ -393,7 +392,7 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
 
-  //Debugging via serial
+  //Debugging
   Serial.begin(4800);
 
   //GPS
@@ -404,7 +403,7 @@ void setup()
   Blynk.begin(bluetoothSerial, auth);
 }
 
-// Testing
+// Test
 void testDriveNorth() {
   float heading = geoHeading();
   int testDist = 10;
