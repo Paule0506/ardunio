@@ -1,6 +1,6 @@
 #define BLYNK_USE_DIRECT_CONNECT
 
-// Imports
+// Biblotheken
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
@@ -244,13 +244,6 @@ float geoHeading() {
   while (headingDegrees >  180) headingDegrees -= 360;
 
   return headingDegrees;
-}
-
-void setServo(int pos) {
-  lidServo.attach(SERVO_PIN);
-  lidServo.write(pos);
-  delay(2000);
-  lidServo.detach();
 }
 
 void setSpeedMotorA(int speed) {
